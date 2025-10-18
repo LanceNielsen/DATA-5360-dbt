@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: fact_sales
+    description: "Sales fact table"
+  - name: oliver_dim_customer
+    description: "Customer dimension table with information about the customer who made a purchase "
+  - name: oliver_dim_date
+    description: "Date dimension table"
+  - name: oliver_dim_employee
+    description: "Employee dimension table with information on the employee who sold the item"
+  - name: oliver_dim_product
+    description: "Product dimension table with information on the product that was sold"
+  - name: oliver_dim_store
+    description: "Store dimension table with information on the store where the sale took place"
