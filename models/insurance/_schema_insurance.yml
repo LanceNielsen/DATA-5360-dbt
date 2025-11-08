@@ -9,17 +9,40 @@ models:
     description: "Insurance date dimension"
   - name: dim_policy
     description: "Insurance policy dimension"
+    columns:
+      - name: policy_key
+        tests:
+          - unique
   - name: fact_claim
     description: "Insurance claim fact"
     columns:
       - name: policy_key
         description: "A foreign key to the policy dimension"
+        tests:
+          - not_null
   - name: stg_customer_service_interactions
     description: |
-      staging model for customer service interations.
-      Each record represetnts a call between a customer and an agent
+      Staging model for customer service interactions.
+      Each record represents a call between a customer and an agent.
+    columns:
+      - name: issue_type
+        tests:
+          - accepted_values:
+              values:
+                - "New Claim"
+                - "Claim Status"
+                - "Policy Change"
+                - "Coverage Info"
+                - "Billing Issue"
+                - "Policy Renewal"
   - name: fact_interaction
     description: |
       customer cervice interaction fact.
       The grain of this table is customer + agent + date
       Each record represents a call between a customer and an agent on a given date.
+    columns:
+      - name: customer_key # column we are comparing with
+        tests:
+          - relationships:
+              to: ref('dim_customer') # the model you want to compare to
+              field: customer_key # the field on the model you want to compare to
