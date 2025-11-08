@@ -3,16 +3,35 @@ version: 2
 models:
   - name: fact_sales
     description: "Sales fact table"
+    columns:
+      - name: Cust_Key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('oliver_dim_customer')
+              field: Cust_key
   - name: oliver_dim_customer
     description: "Customer dimension table with information about the customer who made a purchase "
   - name: oliver_dim_date
     description: "Date dimension table"
   - name: oliver_dim_employee
     description: "Employee dimension table with information on the employee who sold the item"
+    columns:
+      - name: employee_key
+        tests:
+          - unique
   - name: oliver_dim_product
     description: "Product dimension table with information on the product that was sold"
   - name: oliver_dim_store
     description: "Store dimension table with information on the store where the sale took place"
+    columns:
+      - name: store_name
+        tests:
+          - accepted_values:
+              values:
+                - "Franks Corner"
+                - "North Skagway"
+                - "East Gilbert"
   - name: stg_employee_certifications
     description: |
       staging model for employee certifications
